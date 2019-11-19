@@ -1,5 +1,5 @@
 {
-  "name": "ppx-let-anything",
+  "name": "@mrmurphy/let-anything",
   "version": "0.1.0",
   "description": "Reason workflow with Esy",
   "license": "MIT",
