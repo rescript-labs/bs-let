@@ -12,7 +12,7 @@ install:
   - npm install -g esy
 script:
   - npm run build
-  - mv ppx/_esy/default/build/default/.ppx/let_anything_ppx/ppx.exe ppx-$TRAVIS_OS_NAME.exe
+  - mv _esy/default/build/default/.ppx/let_anything_ppx/ppx.exe ppx-$TRAVIS_OS_NAME.exe
 deploy:
   provider: npm
   email: murphyrandle@gmail.com
