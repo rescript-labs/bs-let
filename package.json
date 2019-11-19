@@ -1,6 +1,6 @@
 {
   "name": "@mrmurphy/let-anything",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Reason workflow with Esy",
   "license": "MIT",
   "esy": {
