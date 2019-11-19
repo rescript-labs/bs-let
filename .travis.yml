@@ -19,8 +19,7 @@ deploy:
   file_glob: true
   file: ppx-*.exe
   overwrite: true
-  api_key:
-    secure: RfWmW/gJ98dmLd2j1U2hcG//1D8n1gQZDGWKULAhSa3IgWEkTHNhlrOlLVnGLs8LIOplhwfWo3/Q7Flf1b7vy4TTClqfJ8tSehzbfPUfRDKBPu24uBVRt/Vq11PtQioeeJrf8vvLP2KfmMaYhAZjMOHF6KAh3gNPmZG4s+PLrdgS/qiC05oTUVreDO//YlP0m+qn9knJmFVKUPkRHnmXazOLFd7GgVR9ZyZrFcUp3WthyKykp23HHUyaBGCD3Wx5mepme6tz5hSn+Msd9MpDA43DZ8oQLSyDFHShY323IcfZMgx94Ro5JrWsnULFFjxjY0h6gXSQ/Cm+zl7Ku/C6bl0NSP/pNUoo3uE+2jwbFodB1y/Xm4PiTOwx5CbFKJw7DEFcFxXAdzf24XdzSp7BUP9bqsfXfB0XVrWSVcP25iSXUXgL2eKxY+0DS9d2xeXEIsaNV8aarneJFhKgKMH9w3XhpVLaKZfW1fIeGWuvQATJ9iBzei7Wd7FTXyc4pnGwFxNxrGrgVWEZMLLvpjUfXeVOStxncY1/oSrbQuegrGCDIFxivPeGaIUwRZnUMiWh3n3cCVjwKmOMakHLdHwAK8NxfH/EO+tkGuGhZqLrsAhrmfKzku1JmiBj5qqJvjmXGPenuqFd+wxtdVgJf7RhxAhQ6IqRzLu30eGDnsIFZy0=
+  api_key: $GITHUB_KEY
   on:
     tags: true
     branch: master
@@ -41,5 +40,4 @@ jobs:
         on:
           tags: true
           branch: master
-        api_key:
-          secure: MORzPXYpW9qvEMlVrq3zoooEzPizn6UMfwp99J0iDrUZoBwayxSvRYuJ2hf34vSknfQeoJewUkvetHzoL8VUQu4mxSWH5SOJLr07vcWWJlzrc/Is0CIb6r4NnDQqCwNWLThvguRF+E6+aeYqWgHUkCudLPLsoaMg14jiwa9X6gNiUTvOfh36wk+4YvvRnhOJMnxlzLGrByZIXdJGQaIE0XMN7Oqbv17S8zinixqi/PfHv8sjIvkvdaOctAtzEdwJXW11h0+qPx8+MvbwznRwLyslnnXaXLspclJqkuAG20EoOiVvY3He5pUWsRu+it2mF4uQBtM0ubKx1jREPhsBMQw0kzkGfSX/HBBTeVgKDEak92oMtrFPM0R5BNgq1lC9sAhPCf4NEY9xgFz8+lhrrX71sSRCFOrT7cpQVn5BsgCmm2yUR1OLGjXVa8Cc6l5JKYYhGR6Ot1r68pQOdVQfQamEh50OCy6GulZRPnFH/I0LIu2EBgDp87cVdWFB0UEcjzzPszMhAhzxKMJ6/fwJU0LhjACqxuZGW1MJJ4vMEe3hV4dJl5rIL8O5L9+2JZCrR4bzC3T+gd3O5NhN+wrwG3fQgRvWjpzyaH0GMEzIlBwU+wie58J0R45df9ZZr51zEVko8bkD9URwOOAvvwZBi0q+VFoi2FkE71lJQ8rrYUo=
+        api_key: $NPM_KEY
