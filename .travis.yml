@@ -15,6 +15,7 @@ script:
 - mv _esy/default/build/default/.ppx/let_anything_ppx/ppx.exe ppx-$TRAVIS_OS_NAME.exe
 deploy:
   provider: releases
+  edge: true
   skip_cleanup: true
   file_glob: true
   file: ppx-*.exe
@@ -36,6 +37,7 @@ jobs:
       deploy:
         skip_cleanup: true
         provider: npm
+        edge: true
         email: m@mrmurphy.dev
         on:
           tags: true
