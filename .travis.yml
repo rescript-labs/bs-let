@@ -20,5 +20,6 @@ deploy:
   api_key:
     secure: WFSJK7z4Ju/AXWWDuT0qbVN07uTq/QiXmmKotvkUv84ljLfNHuN6d6A3peAI7O7PzlM5HTy3MDCCh6cEo0y+Rz1t99MbMUqzwBsg5eSWHw2730Upx3ulNzzicsll3EMChHqwZX/PoOsXO6WwcozShJ4VuHI+p7fALL+kWuVsxUKJy3JdLQwzzwbI/8kcM4yopDbzaEp9caPp/fjgkLfD17D+PwqqfhvKzsFvz3DO883ObMPvQVauLT49Fp2NKU5FMds+pwPiJPHmo4LoHUn0x/hNLpif585t4rNICZXUvy9gZI7isxG0muqjBeLoRzvOpjbM2pCnBA/2abRQNiS0maBouW5jGUxiHPd9WCve7tWlisKN0jVFlmEafSh8yMZbR7iRw53q2spHCIMr6Uyd/qAY09BgEuXovF9vMgRTj6o/XT+PXlH6uVoITAzqVmFzWPr+pRvg6GnrIRe7x5qZstzcHgXNfc/36816YuZ5F8UguiIfAo7iuV08bPP95aSbCKYLWboF/1W0kzIKMH+Kx4MWjeDCtFP0tnCoh6z+unRU7nbixzJdobJsWye5JQNQjqD1nlzLR1ZB4ZBdsPxvNbcF3WoxnsZxWeH+NreHSRgLM5CQCT1hf5JFofITH/L7luXxImU9HSCwqx+DHQ59KzKCQLPviAoflvxWMmwdxCI=
   on:
-    tags: true
+    tags: false
     repo: mrmurphy/let-anything
+    branch: master
