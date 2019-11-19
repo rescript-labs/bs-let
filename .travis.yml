@@ -1,22 +1,43 @@
 language: node_js
 os:
-  - linux
-  - osx
+- linux
+- osx
 cache:
   yarn: true
   directories:
-    - "$HOME/.esy"
+  - "$HOME/.esy"
 node_js:
-  - "11"
-install:
-  - npm install -g esy
+- '11'
 script:
-  - npm run build
-  - mv _esy/default/build/default/.ppx/let_anything_ppx/ppx.exe ppx-$TRAVIS_OS_NAME.exe
+- npm run build
+- mv _esy/default/build/default/.ppx/let_anything_ppx/ppx.exe ppx-$TRAVIS_OS_NAME.exe
 deploy:
-  provider: npm
-  email: m@mrmurphy.dev
+  provider: releases
+  skip_cleanup: true
+  file_glob: true
+  file: ppx-*.exe
+  overwrite: true
   api_key:
-    secure: K8Aey64EnxWRb/Q4N5+9ate+it2/mm5YjR8N+1hxTD+UH6clHeg+6VvDtN3jPgGL4aI0N4k1Iqdc7xsuwrzktA97z5RcAaubBm4nttEry7XyoNdhJVJhr68j9+Ft2A4r7MI2wUNUF8FTUzTk5lCBC/JfLeefcNFXLEuS6Q+NV1Nf50qNRSLEPfYHPWw0m4jioLN4+SpoqHRmwTplMgEx9rVmc27rDsNCyi1QXrGEeRdyX0vV53iEDsckWqrGhfQnZ3eRWFb3q9sNdKh1g/SefAcLwHYTA5Ndal/EMx4KTISZUJJksD+bUMs7dnTbGBUcezoMeNBCPmITppCVg5kOFSkidOCDhI+noQFcSsq8X+WVkiZjUVWquA/GXlnxKFci3U0Va/dNI/lZzdIF6ei8irjOUQrBJxHsfLCUVcQGD1MSu2qeN2ilkaDWkBVLwPV2RysibCYqZE87JmbgXEGi7/Iga+zUxhZEZccjUrBxdC5piEbcdYJsHeY2Jy5c/QRehzj+XHhbDG9byfmbBu30XoC3FRvl9H6vn1HZHuiRMAD4PQDHNLkMLt5GDF/WfK76fAhcHfU9+AC0VE/SApUHSf/EQKzN2ZHPbQ/JzGWO5EQejiJGqIU4RB77IMfhPgxpI5t/zBGGg7o5KV1FKOr8wzYkCAVPNcISuLGZZlF9r68=
+    secure: RfWmW/gJ98dmLd2j1U2hcG//1D8n1gQZDGWKULAhSa3IgWEkTHNhlrOlLVnGLs8LIOplhwfWo3/Q7Flf1b7vy4TTClqfJ8tSehzbfPUfRDKBPu24uBVRt/Vq11PtQioeeJrf8vvLP2KfmMaYhAZjMOHF6KAh3gNPmZG4s+PLrdgS/qiC05oTUVreDO//YlP0m+qn9knJmFVKUPkRHnmXazOLFd7GgVR9ZyZrFcUp3WthyKykp23HHUyaBGCD3Wx5mepme6tz5hSn+Msd9MpDA43DZ8oQLSyDFHShY323IcfZMgx94Ro5JrWsnULFFjxjY0h6gXSQ/Cm+zl7Ku/C6bl0NSP/pNUoo3uE+2jwbFodB1y/Xm4PiTOwx5CbFKJw7DEFcFxXAdzf24XdzSp7BUP9bqsfXfB0XVrWSVcP25iSXUXgL2eKxY+0DS9d2xeXEIsaNV8aarneJFhKgKMH9w3XhpVLaKZfW1fIeGWuvQATJ9iBzei7Wd7FTXyc4pnGwFxNxrGrgVWEZMLLvpjUfXeVOStxncY1/oSrbQuegrGCDIFxivPeGaIUwRZnUMiWh3n3cCVjwKmOMakHLdHwAK8NxfH/EO+tkGuGhZqLrsAhrmfKzku1JmiBj5qqJvjmXGPenuqFd+wxtdVgJf7RhxAhQ6IqRzLu30eGDnsIFZy0=
   on:
+    tags: true
+    branch: master
     repo: mrmurphy/let-anything
+jobs:
+  include:
+    matrix:
+    - stage: deploy
+      script: skip
+      before_deploy:
+      - curl -OL https://github.com/mrmurphy/let-anything/releases/download/$TRAVIS_TAG/ppx-linux.exe
+      - curl -OL https://github.com/mrmurphy/let-anything/releases/download/$TRAVIS_TAG/ppx-osx.exe
+      - chmod +x *.exe
+      deploy:
+        skip_cleanup: true
+        provider: npm
+        email: m@mrmurphy.dev
+        on:
+          tags: true
+          branch: master
+        api_key:
+          secure: MORzPXYpW9qvEMlVrq3zoooEzPizn6UMfwp99J0iDrUZoBwayxSvRYuJ2hf34vSknfQeoJewUkvetHzoL8VUQu4mxSWH5SOJLr07vcWWJlzrc/Is0CIb6r4NnDQqCwNWLThvguRF+E6+aeYqWgHUkCudLPLsoaMg14jiwa9X6gNiUTvOfh36wk+4YvvRnhOJMnxlzLGrByZIXdJGQaIE0XMN7Oqbv17S8zinixqi/PfHv8sjIvkvdaOctAtzEdwJXW11h0+qPx8+MvbwznRwLyslnnXaXLspclJqkuAG20EoOiVvY3He5pUWsRu+it2mF4uQBtM0ubKx1jREPhsBMQw0kzkGfSX/HBBTeVgKDEak92oMtrFPM0R5BNgq1lC9sAhPCf4NEY9xgFz8+lhrrX71sSRCFOrT7cpQVn5BsgCmm2yUR1OLGjXVa8Cc6l5JKYYhGR6Ot1r68pQOdVQfQamEh50OCy6GulZRPnFH/I0LIu2EBgDp87cVdWFB0UEcjzzPszMhAhzxKMJ6/fwJU0LhjACqxuZGW1MJJ4vMEe3hV4dJl5rIL8O5L9+2JZCrR4bzC3T+gd3O5NhN+wrwG3fQgRvWjpzyaH0GMEzIlBwU+wie58J0R45df9ZZr51zEVko8bkD9URwOOAvvwZBi0q+VFoi2FkE71lJQ8rrYUo=
