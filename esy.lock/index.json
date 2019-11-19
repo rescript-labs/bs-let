@@ -1,6 +1,6 @@
 {
-  "checksum": "878d08ec935793416cecad8be2e23bf7",
-  "root": "hello-ppx-esy@link-dev:./package.json",
+  "checksum": "204e38f8449ad3e67c24aee8d9d501a7",
+  "root": "ppx-let-anything@link-dev:./package.json",
   "node": {
     "refmterr@3.2.2@d41d8cd9": {
       "id": "refmterr@3.2.2@d41d8cd9",
@@ -22,6 +22,26 @@
       ],
       "devDependencies": []
     },
+    "ppx-let-anything@link-dev:./package.json": {
+      "id": "ppx-let-anything@link-dev:./package.json",
+      "name": "ppx-let-anything",
+      "version": "link-dev:./package.json",
+      "source": {
+        "type": "link-dev",
+        "path": ".",
+        "manifest": "package.json"
+      },
+      "overrides": [],
+      "dependencies": [
+        "refmterr@3.2.2@d41d8cd9", "ocaml@4.6.1000@d41d8cd9",
+        "@opam/ocaml-migrate-parsetree@opam:1.4.0@0c4ec62d",
+        "@opam/dune@opam:1.11.4@21d66ccd", "@esy-ocaml/reason@3.5.2@d41d8cd9"
+      ],
+      "devDependencies": [
+        "ocaml@4.6.1000@d41d8cd9", "esy@0.5.8@d41d8cd9",
+        "@esy-ocaml/merlin@3.0.5005@d41d8cd9"
+      ]
+    },
     "ocaml@4.6.1000@d41d8cd9": {
       "id": "ocaml@4.6.1000@d41d8cd9",
       "name": "ocaml",
@@ -36,24 +56,36 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "hello-ppx-esy@link-dev:./package.json": {
-      "id": "hello-ppx-esy@link-dev:./package.json",
-      "name": "hello-ppx-esy",
-      "version": "link-dev:./package.json",
+    "esy-solve-cudf@0.1.10@d41d8cd9": {
+      "id": "esy-solve-cudf@0.1.10@d41d8cd9",
+      "name": "esy-solve-cudf",
+      "version": "0.1.10",
       "source": {
-        "type": "link-dev",
-        "path": ".",
-        "manifest": "package.json"
+        "type": "install",
+        "source": [
+          "archive:https://registry.npmjs.org/esy-solve-cudf/-/esy-solve-cudf-0.1.10.tgz#sha1:2cd48af78183ae8f06c035a398beb65673c2d77d"
+        ]
+      },
+      "overrides": [],
+      "dependencies": [],
+      "devDependencies": []
+    },
+    "esy@0.5.8@d41d8cd9": {
+      "id": "esy@0.5.8@d41d8cd9",
+      "name": "esy",
+      "version": "0.5.8",
+      "source": {
+        "type": "install",
+        "source": [
+          "archive:https://registry.npmjs.org/esy/-/esy-0.5.8.tgz#sha1:09698649cdd0310836ca278b827860aadc3140eb"
+        ]
       },
       "overrides": [],
       "dependencies": [
-        "refmterr@3.2.2@d41d8cd9", "ocaml@4.6.1000@d41d8cd9",
-        "@opam/ocaml-migrate-parsetree@opam:1.4.0@0c4ec62d",
-        "@opam/dune@opam:1.11.4@21d66ccd", "@esy-ocaml/reason@3.5.2@d41d8cd9"
+        "esy-solve-cudf@0.1.10@d41d8cd9",
+        "@esy-ocaml/esy-opam@0.0.15@d41d8cd9"
       ],
-      "devDependencies": [
-        "ocaml@4.6.1000@d41d8cd9", "@esy-ocaml/merlin@3.0.5005@d41d8cd9"
-      ]
+      "devDependencies": []
     },
     "@reason-native/pastel@0.2.2@d41d8cd9": {
       "id": "@reason-native/pastel@0.2.2@d41d8cd9",
@@ -683,6 +715,20 @@
         "@esy-ocaml/substs@0.0.1@d41d8cd9",
         "@esy-ocaml/esy-installer@0.0.1@d41d8cd9"
       ],
+      "devDependencies": []
+    },
+    "@esy-ocaml/esy-opam@0.0.15@d41d8cd9": {
+      "id": "@esy-ocaml/esy-opam@0.0.15@d41d8cd9",
+      "name": "@esy-ocaml/esy-opam",
+      "version": "0.0.15",
+      "source": {
+        "type": "install",
+        "source": [
+          "archive:https://registry.npmjs.org/@esy-ocaml/esy-opam/-/esy-opam-0.0.15.tgz#sha1:97656c8e5774cf84692a680319784cb833cc5b70"
+        ]
+      },
+      "overrides": [],
+      "dependencies": [],
       "devDependencies": []
     },
     "@esy-ocaml/esy-installer@0.0.1@d41d8cd9": {

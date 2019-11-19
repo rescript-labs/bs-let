@@ -13,12 +13,12 @@
   "license": "MIT",
   "esy": {},
   "dependencies": {
-    "hello-ppx-esy": "*"
+    "let-anything-ppx": "*"
   },
   "devDependencies": {
     "bs-platform": "7.0.0-dev.1"
   },
   "resolutions": {
-    "hello-ppx-esy": "link:../"
+    "let-anything-ppx": "link:../"
   }
 }

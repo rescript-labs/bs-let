@@ -13,9 +13,7 @@
       "in-source": true
     }
   ],
-  "ppx-flags": [
-    "../_esy/default/build/default/.ppx/let_anything_ppx/ppx.exe --as-ppx"
-  ],
+  "ppx-flags": ["../ppx"],
   "suffix": ".bs.js",
   "namespace": true,
   "bs-dependencies": [],

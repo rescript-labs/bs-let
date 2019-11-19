@@ -1,0 +1,21 @@
+language: node_js
+os:
+  - linux
+  - osx
+cache:
+  yarn: true
+  directories:
+    - "$HOME/.esy"
+node_js:
+  - "11"
+script:
+  - npm run build
+  - mv ppx/_esy/default/build/default/.ppx/let_anything_ppx/ppx.exe ppx-$TRAVIS_OS_NAME.exe
+deploy:
+  provider: npm
+  email: murphyrandle@gmail.com
+  api_key:
+    secure: POmG4p3+EUhddtJ01CuxZGCoemnVnKCIwGVeKebg1VK0ur9c3zTBtZeNNpAcC4pl4ri51HGlTqFtcDSekP03uKkuGbtvQ1/azq2++OLsdEuzsGRYgbCi1X9VhwHpkWZfVClFO4MMOTwXpRgsAjOyF9+XiA/AV/5q2eQudgqHfW9L+b+7ziMO/TKqQHr6+LqqtyeMG+aeXGAa9aBMeqYWDAgja02P1atjvXTJ+Lr9fCyZcLfhKxHcgnQIy7LT0a4/Szhn/xFZLZ9o19uwdMavbVjF33HvRah8SB1o0S3hZcKV0YyqVbqVCPiiEswaUlamgG4TZ2RmOC+A8/eY9N70RDVsSpryBJLADLP5bTdMOceSTiN9sl1Hj3ENIBph3XSOKOkkpsIBzdjJGOUruUvOW2YiiYFCNMF7KqfULOZEyhPNxmxdZEaCRjG8O9AuMpgMTLLxezeXeJafGmY9JlqB3sfh23pq2nOBkcz2sKmbyGNbfjE63dMuuuUIMGEGYDGFtnxY3J5Rmbmhh1+e5ZS0uK8NevuPuVBkVKvbm+MRljgbfp2Xib+M8ETFWGxR0Py2RTtJIBODxLBL5+RtOBPe+PwJKnUXN3D3GX7ljmL++Tmo+Sb+mjfhmMrQO39o0Pd+fRftzkRgTlPn1cDc5uhWG72HSmN/d3IOPkbCkS56DKk=
+  on:
+    tags: true
+    repo: mrmurphy/let-anything

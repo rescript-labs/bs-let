@@ -4,18 +4,10 @@
   "description": "Reason workflow with Esy",
   "license": "MIT",
   "esy": {
-    "build": "refmterr dune build -p let_anything_ppx",
-    "NOTE": "Optional release Section. Customizes result of `esy release`",
-    "release": {
-      "releasedBinaries": [
-        "let_anything_ppx.exe"
-      ],
-      "deleteFromBinaryRelease": [
-        "*esy_ocaml_*",
-        "*refmterr-*",
-        "ocaml-*"
-      ]
-    }
+    "build": "refmterr dune build -p let_anything_ppx"
+  },
+  "scripts": {
+    "build": "esy"
   },
   "dependencies": {
     "@opam/dune": "*",
@@ -31,6 +23,7 @@
   },
   "devDependencies": {
     "@esy-ocaml/merlin": "*",
+    "esy": "^0.5.8",
     "ocaml": "~4.6.1000"
   }
 }
