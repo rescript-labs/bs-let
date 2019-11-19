@@ -23,23 +23,20 @@ deploy:
   api_key: $GITHUB_KEY
   on:
     tags: true
-    branch: master
     repo: mrmurphy/let-anything
 jobs:
   include:
-    matrix:
-    - stage: deploy
-      script: skip
-      before_deploy:
-      - curl -OL https://github.com/mrmurphy/let-anything/releases/download/$TRAVIS_TAG/ppx-linux.exe
-      - curl -OL https://github.com/mrmurphy/let-anything/releases/download/$TRAVIS_TAG/ppx-osx.exe
-      - chmod +x *.exe
-      deploy:
-        skip_cleanup: true
-        provider: npm
-        edge: true
-        email: m@mrmurphy.dev
-        on:
-          tags: true
-          branch: master
-        api_key: $NPM_KEY
+  - stage: deploy
+    script: skip
+    before_deploy:
+    - curl -OL https://github.com/mrmurphy/let-anything/releases/download/$TRAVIS_TAG/ppx-linux.exe
+    - curl -OL https://github.com/mrmurphy/let-anything/releases/download/$TRAVIS_TAG/ppx-osx.exe
+    - chmod +x *.exe
+    deploy:
+      skip_cleanup: true
+      provider: npm
+      edge: true
+      email: m@mrmurphy.dev
+      on:
+        tags: true
+      api_key: $NPM_KEY
