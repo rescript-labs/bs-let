@@ -6,6 +6,9 @@
   "esy": {
     "build": "refmterr dune build -p let_anything_ppx"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "esy"
   },
