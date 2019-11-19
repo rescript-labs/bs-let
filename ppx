@@ -6,8 +6,8 @@ if [ -f $DIR/_esy/default/build/default/.ppx/let_anything_ppx/ppx.exe ]; then
     $DIR/_esy/default/build/default/.ppx/let_anything_ppx/ppx.exe --as-ppx $@
 elif [ "$(uname)" == "Darwin" ]; then
     # Run the Mac PPX
-    ./ppx-osx.exe --as-ppx $@
+    $DIR/ppx-osx.exe --as-ppx $@
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     # Run the Linux PPX
-    ./ppx-linux.exe --as-ppx $@
+    $DIR/ppx-linux.exe --as-ppx $@
 fi
