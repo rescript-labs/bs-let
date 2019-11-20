@@ -1,5 +1,7 @@
 # "let" PPX
 
+![A woman knitting some code](artwork/eastwood-page-under-construction.png)
+
 This is a PPX (language extension) designed to make _monadic operations_ (think async functions with "await" statements in Javascript if you don't know what a monadic operation is) easy to write and read in ReasonML.
 
 ## Warning: Lab Project
@@ -148,3 +150,5 @@ Currently this project only precomiles binaries for linux and OS X according to 
 ## Credit
 
 This PPX was created by @jaredly and upgraded to the latest OCaml by @anmonteiro. Murphy Randle has merged Antonio's changes to upgrade the package for Bucklescript 6.x and 7.x, re-packaged it to build with `esy` and precompiled binaries for osx and linux. Murphy has also written this readme to describe the most common use-case for this PPX. More features are available but undocumented in this readme. You can see them here: https://github.com/jaredly/let-anything.
+
+- Lovely readme artwork https://icons8.com/ouch/illustration/eastwood-page-under-construction
