@@ -1,6 +1,6 @@
 # "let" PPX
 
-![A woman knitting some code](artwork/eastwood-page-under-construction.png)
+![A woman knitting some code](https://github.com/reasonml-labs/bs-let/raw/master/artwork/eastwood-page-under-construction.png)
 
 This is a PPX (language extension) designed to make _monadic operations_ (think async functions with "await" statements in Javascript if you don't know what a monadic operation is) easy to write and read in ReasonML.
 
