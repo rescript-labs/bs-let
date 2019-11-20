@@ -1,6 +1,19 @@
-# let-anything PPX
+# "let" PPX
 
 This is a PPX (language extension) designed to make _monadic operations_ (think async functions with "await" statements in Javascript if you don't know what a monadic operation is) easy to write and read in ReasonML.
+
+## Warning: Lab Project
+
+This is package is a community "Lab" project. This means that community members use it and contribute to it, but it is not officially supported or recommended by the ReasonML community. Using this project in a production environment means being willing to contribute yourself if needs be.
+
+Also, the expected lifetime of this PPX is relatively short. OCaml 4.08 has introduced native syntax for doing the same thing that this PPX does (`let+`). At the time of this writing, Bucklescript is still a ways out from supporting OCaml 4.08, or backporting support for `let+`. This PPX has two purposes:
+
+- Provide a temporary solution until Bucklescript and Reason both support `let+`.
+- Gague community interest in monadic syntax sugar in general and gather feedback on its usage.
+
+## Compatibility
+
+This package only works with bs-platform 6.x and above. If you're stuck on 5.x take a look at [Jared's original repo](https://github.com/jaredly/let-anything).
 
 ## Installation
 
@@ -116,9 +129,10 @@ let logUserIn = (email: string, password: string) => {
 };
 ```
 
-There's a whole lot that can be done with this PPX. I've even gone a little crazy in our main project at work and written a module to combine monads, like `AsyncOption` that specifically handles optional values inside of promises. But, in practice, I use that module seldom. Don't go too crazy, keeping it simple will get you a long, long way.
+There's a whole lot that can be done with this PPX. It's even possible to go a little crazy and start writing modules that combine monads, like `AsyncOption` that will specifically handle optional values inside of promises. But, in practice, those modules are seldom needed. Don't go too crazy, keeping it simple will get you a long, long way.
 
 Things to remember:
+
 - You don't have to name your module anything special. It could be named `Foo` and you can `let%Foo blah = ...`.
 - Simple is better than complex.
 - Obvious is usually better than hidden.
@@ -129,8 +143,8 @@ Things to remember:
 This is specifically designed to be helpful with writing Javascript code through ReasonML and Bucklescript. Native OCaml 4.08 implemented a native monadic sugar syntax. So if you're writing native code, I'd suggest skipping this PPX and waiting until [this PR](https://github.com/facebook/reason/pull/2487) lands in Reason, and then adopting the new syntax.
 
 **A Note about Windows**
-I don't develop on Windows and neither does my company, so I've only taken the time to precomile binaries for linux and osx in this package. If you're a Windows user and would like to use this PPX, I'd love a pull-request that moves the project from Travis to Azure Pipelines and builds for all three platforms.
+Currently this project only precomiles binaries for linux and OS X according to the needs of existing maintainers. If you're a Windows user and would like to use this PPX, We'd love a pull-request that moves the project from Travis to Azure Pipelines and builds for all three platforms.
 
 ## Credit
 
-This PPX was created by @jaredly and upgraded to the latest OCaml by @anmonteiro. I have updated Jared's work with Antonio's changes, re-packaged it to build with `esy` and precompiled binaries for osx and linux. I've also written this readme to describe the most common use-case for this PPX. More features are available but undocumented in this readme. You can see them here: https://github.com/jaredly/let-anything. Unfortunately I didn't write the PPX, and I'm still pretty baffled by OCaml's AST and the tools surrounding it, so I may not be very helpful in closing issues 😅.
+This PPX was created by @jaredly and upgraded to the latest OCaml by @anmonteiro. Murphy Randle has merged Antonio's changes to upgrade the package for Bucklescript 6.x and 7.x, re-packaged it to build with `esy` and precompiled binaries for osx and linux. Murphy has also written this readme to describe the most common use-case for this PPX. More features are available but undocumented in this readme. You can see them here: https://github.com/jaredly/let-anything.
