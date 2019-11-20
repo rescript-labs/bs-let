@@ -1,6 +1,6 @@
 # let-anything PPX
 
-This is a PPX (language extension) designed to make _monadic operations_ (think async functions with "await" statments in Javascript if you don't know what a monadic operation is) easy to write and read in ReasonML.
+This is a PPX (language extension) designed to make _monadic operations_ (think async functions with "await" statements in Javascript if you don't know what a monadic operation is) easy to write and read in ReasonML.
 
 ## Installation
 
@@ -124,7 +124,7 @@ There's a whole lot that can be done with this PPX. You can even go a little cra
 This is specifically designed to be helpful with writing Javascript code through ReasonML and Bucklescript. Native OCaml 4.08 implemented a native monadic sugar syntax. So if you're writing native code, I'd suggest skipping this PPX and waiting until [this PR](https://github.com/facebook/reason/pull/2487) lands in Reason, and then adopting the new syntax.
 
 **A Note about Windows**
-I don't develop on Windows and neither does my company, so I've only taken the time to precomile binaries for linux and osx in this package. If you're a Windows user and would like to use this PPX, I'd love a pull-request that moves the project from Travix to Azure Pipelines and builds for all three platforms.
+I don't develop on Windows and neither does my company, so I've only taken the time to precomile binaries for linux and osx in this package. If you're a Windows user and would like to use this PPX, I'd love a pull-request that moves the project from Travis to Azure Pipelines and builds for all three platforms.
 
 ## Credit
 
