@@ -1,18 +1,18 @@
 language: node_js
 os:
-- linux
-- osx
+  - linux
+  - osx
 cache:
   yarn: true
   directories:
-  - "$HOME/.esy"
+    - "$HOME/.esy"
 node_js:
-- '11'
+  - "11"
 install:
-- npm install -g esy
+  - npm install -g esy
 script:
-- npm run build
-- mv _esy/default/build/default/.ppx/let_anything_ppx/ppx.exe ppx-$TRAVIS_OS_NAME.exe
+  - npm run build
+  - mv _esy/default/build/default/.ppx/let_anything_ppx/ppx.exe ppx-$TRAVIS_OS_NAME.exe
 deploy:
   provider: releases
   edge: true
@@ -23,20 +23,19 @@ deploy:
   api_key: $GITHUB_KEY
   on:
     tags: true
-    repo: mrmurphy/let-anything
 jobs:
   include:
-  - stage: deploy
-    script: skip
-    before_deploy:
-    - curl -OL https://github.com/mrmurphy/let-anything/releases/download/$TRAVIS_TAG/ppx-linux.exe
-    - curl -OL https://github.com/mrmurphy/let-anything/releases/download/$TRAVIS_TAG/ppx-osx.exe
-    - chmod +x *.exe
-    deploy:
-      skip_cleanup: true
-      provider: npm
-      edge: true
-      email: m@mrmurphy.dev
-      on:
-        tags: true
-      api_key: $NPM_KEY
+    - stage: deploy
+      script: skip
+      before_deploy:
+        - curl -OL https://github.com/reasonml-labs/bs-let/releases/download/$TRAVIS_TAG/ppx-linux.exe
+        - curl -OL https://github.com/reasonml-labs/bs-let/releases/download/$TRAVIS_TAG/ppx-osx.exe
+        - chmod +x *.exe
+      deploy:
+        skip_cleanup: true
+        provider: npm
+        edge: true
+        email: m@mrmurphy.dev
+        on:
+          tags: true
+        api_key: $NPM_KEY
