@@ -4,13 +4,13 @@ This is a PPX (language extension) designed to make _monadic operations_ (think 
 
 ## Installation
 
-- `npm install --save-dev @mrmurphy/let-anything`
-- Open up your `bsconfig.json` and add `@mrmurphy/let-anything/ppx` to your `ppx-flags`. It should look something like this:
+- `npm install --save-dev bs-let`
+- Open up your `bsconfig.json` and add `bs-let/ppx` to your `ppx-flags`. It should look something like this:
   ```json
     {
         ...
         "bsc-flags": [...],
-        "ppx-flags": ["@mrmurphy/let-anything/ppx", ...],
+        "ppx-flags": ["bs-let/ppx", ...],
         "refmt": ...
     }
   ```
@@ -47,11 +47,11 @@ type user = {
 // Get the user's street name from a bunch of nested options. If anything is
 // None, return None.
 let getStreet = (maybeUser: option(user)): option(string) => {
-    let%Opt user = maybeUser;
+    let%Option user = maybeUser;
     // Notice that info isn't an option anymore once we use let%Pom!
-    let%Opt info = user.info;
-    let%Opt address = info.address;
-    let%Opt street = info.street;
+    let%Option info = user.info;
+    let%Option address = info.address;
+    let%Option street = info.street;
     Some(street->Js.String.toUpperCase)
 };
 ```
@@ -116,7 +116,12 @@ let logUserIn = (email: string, password: string) => {
 };
 ```
 
-There's a whole lot that can be done with this PPX. You can even go a little crazy and write a module like `AsyncOption` that would specifically handle optional values inside of promises. I've done that in my main project at work, but in practice I use it seldom, so don't go too crazy. Keeping it simple will get you a long, long way.
+There's a whole lot that can be done with this PPX. I've even gone a little crazy in our main project at work and written a module to combine monads, like `AsyncOption` that specifically handles optional values inside of promises. But, in practice, I use that module seldom. Don't go too crazy, keeping it simple will get you a long, long way.
+
+Things to remember:
+- You don't have to name your module anything special. It could be named `Foo` and you can `let%Foo blah = ...`.
+- Simple is better than complex.
+- Obvious is usually better than hidden.
 
 ## Notes
 
