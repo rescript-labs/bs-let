@@ -1,7 +1,7 @@
 {
-  "name": "@mrmurphy/let-anything",
-  "version": "0.1.2",
-  "description": "Reason workflow with Esy",
+  "name": "bs-let",
+  "version": "0.1.5",
+  "description": "A PPX for async/await (and general monadic binding) in ReasonML.",
   "license": "MIT",
   "esy": {
     "build": "refmterr dune build -p let_anything_ppx"
