@@ -75,15 +75,18 @@ That code is flat, readable, and understandable. Here's an alternative without t
 
 ```reasonml
 let getStreet = (maybeUser: option(user)): option(string) => {
-    maybeUser->Belt.Option.flatMap(user => {
-        user->Belt.Option.flatMap(info => {
-            info->Belt.Option.flatMap(address => {
-                address->Belt.Option.flatMap(street => {
-                    Some(street->Js.String.toUpperCase)
-                })
-            })
-        })
-    })
+  maybeUser->Belt.Option.flatMap(user =>
+    user.info
+    ->Belt.Option.flatMap(personalInfo =>
+        personalInfo.address
+        ->Belt.Option.flatMap(address =>
+            address.street
+            ->Belt.Option.flatMap(street =>
+                Some(street->Js.String.toUpperCase)
+              )
+          )
+      )
+  );
 };
 ```
 
@@ -138,6 +141,81 @@ Things to remember:
 - You don't have to name your module anything special. It could be named `Foo` and you can `let%Foo blah = ...`.
 - Simple is better than complex.
 - Obvious is usually better than hidden.
+
+## About Performance
+
+It's worth noting that this PPX simply produces a _function callback structure_. Why is this important? There are potential performance gains in situations where avoiding a callback structure is possible.
+
+For example, this handrwitten code, which is pretty much what the PPX produces:
+
+```reasonml
+let getStreet = (maybeUser: option(user)): option(string) => {
+  maybeUser->Belt.Option.flatMap(user =>
+    user.info
+    ->Belt.Option.flatMap(personalInfo =>
+        personalInfo.address
+        ->Belt.Option.flatMap(address =>
+            address.street
+            ->Belt.Option.flatMap(street =>
+                Some(street->Js.String.toUpperCase)
+              )
+          )
+      )
+  );
+};
+```
+
+Is _functionally_ equivalent, but inferior in terms of performance, to the following hand-written code:
+
+```reasonml
+let getStreetExplicit = (maybeUser: option(user)): option(string) => {
+  switch (maybeUser) {
+  | None => None
+  | Some(user) =>
+    switch (user.info) {
+    | None => None
+    | Some(personalInfo) =>
+      switch (personalInfo.address) {
+      | None => None
+      | Some(address) =>
+        switch (address.street) {
+        | None => None
+        | Some(street) => Some(street->Js.String.toUpperCase)
+        }
+      }
+    }
+  };
+};
+```
+
+Because we're working with Options, we can `switch` on the values instead of `flatMap`-ing. The generated Javascript of the second approach looks like this:
+
+```javascript
+function getStreetExplicit(maybeUser) {
+  if (maybeUser !== undefined) {
+    var match = maybeUser[/* info */ 0];
+    if (match !== undefined) {
+      var match$1 = match[/* address */ 0];
+      if (match$1 !== undefined) {
+        var match$2 = match$1[/* street */ 0];
+        if (match$2 !== undefined) {
+          return match$2.toUpperCase();
+        } else {
+          return;
+        }
+      } else {
+        return;
+      }
+    } else {
+      return;
+    }
+  }
+}
+```
+
+Only one total function invocation is produced by the compiler in this case instead of one invocation _for every bind_. This is significantly faster to execute and may be worth choosing if this function will be very highly trafficked.
+
+In summary, this PPX is not designed to produce the most performant code in every case. It's just designed to make callbacks easier to use.
 
 ## Notes
 
