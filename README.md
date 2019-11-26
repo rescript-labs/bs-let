@@ -1,4 +1,4 @@
-# "let" PPX
+# bs-let
 
 ![A woman knitting some code](https://github.com/reasonml-labs/bs-let/raw/master/artwork/eastwood-page-under-construction.png)
 
