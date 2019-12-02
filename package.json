@@ -1,6 +1,6 @@
 {
   "name": "bs-let",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "A PPX for async/await (and general monadic binding) in ReasonML.",
   "repository": {
     "url": "https://github.com/reasonml-labs/bs-let"
