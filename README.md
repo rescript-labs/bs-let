@@ -63,10 +63,10 @@ type user = {
 // None, return None.
 let getStreet = (maybeUser: option(user)): option(string) => {
     let%Option user = maybeUser;
-    // Notice that info isn't an option anymore once we use let%Pom!
+    // Notice that info isn't an option anymore once we use let%Option!
     let%Option info = user.info;
     let%Option address = info.address;
-    let%Option street = info.street;
+    let%Option street = address.street;
     Some(street->Js.String.toUpperCase)
 };
 ```
