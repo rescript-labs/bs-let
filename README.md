@@ -101,13 +101,13 @@ Here's a more complex example of an async control flow using the [Repromise](htt
 // module, and adding our own function.
 module Repromise = {
     include Repromise;
-    let let_ = Repromise.andThen;
+    let let_ = (promise, cb) => Repromise.andThen(cb, promise);
 
     // This is totally optional. It can be nice sometimes to return a
     // non-promise value at the end of a function and have it automatically
     // wrapped.
     module Wrap = {
-        let let_ = Repromise.map;
+        let let_ = (promise, cb) => Repromise.map(cb, promise);
     }
 }
 
