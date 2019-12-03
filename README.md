@@ -36,7 +36,9 @@ Simple and sweet, this is a language extension that flattens callbacks.
 
 If you'd like to see it in action, take a look at the video below. Otherwise, keep reading!
 
-[![Screenshot of instructional video from egghead.io](https://user-images.githubusercontent.com/1227109/70068564-76825580-15ad-11ea-8d4a-f2161bbd40f3.png)](https://egghead.io/lessons/reason-async-await-in-reasonml)
+<a href="https://egghead.io/lessons/reason-async-await-in-reasonml" target="_blank">
+  <img src="https://user-images.githubusercontent.com/1227109/70068564-76825580-15ad-11ea-8d4a-f2161bbd40f3.png" alt="Screenshot of instructional video from egghead.io"/>
+  </a>
 
 All you need is a module which defines a function called `let_` which takes something to map over, and a callback to do the mapping. For example:
 
