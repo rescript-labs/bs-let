@@ -32,7 +32,7 @@ This package only works with bs-platform 6.x and above. If you're stuck on 5.x t
 
 ## Usage
 
-Simple and sweet, this is a language extension that flattens callbacks. 
+Simple and sweet, this is a language extension that flattens callbacks.
 
 If you'd like to see it in action, take a look at the video below. Otherwise, keep reading!
 
@@ -100,45 +100,44 @@ let getStreet = (maybeUser: option(user)): option(string) => {
 
 Much nicer to have the sugar, no? This PPX really shines, though, when we use it to chain async operations, since that has to be done quite a lot in Javascript, especially server-side, and it typically happens multiple times in the middle of large and complex functions.
 
-Here's a more complex example of an async control flow using the [Repromise](https://aantron.github.io/repromise/docs/QuickStart) library to work with Javascript promises:
+Here's a more complex example of an async control flow using the [reason-promise](https://github.com/aantron/promise) library to work with Javascript promises:
 
 ```reasonml
-
-// Repromise doesn't ship with native support for this PPX, so we simply add our
-// own by re-defining the module, including all the stuff from the original
-// module, and adding our own function.
-module Repromise = {
-    include Repromise;
-    let let_ = (promise, cb) => Repromise.andThen(cb, promise);
+// reason-promise doesn't ship with native support for this PPX, so we simply
+// add our own by re-defining the module, including all the stuff from the
+// original module, and adding our own function.
+module Promise = {
+    include Promise;
+    let let_ = Promise.flatMap;
 
     // This is totally optional. It can be nice sometimes to return a
     // non-promise value at the end of a function and have it automatically
     // wrapped.
     module Wrap = {
-        let let_ = (promise, cb) => Repromise.map(cb, promise);
+        let let_ = Promise.map;
     }
 }
 
 let logUserIn = (email: string, password: string) => {
     // Assume this is a function that returns a promise of a hash.
-    let%Repromise hash = UserService.hashPassword(password)
-    let%Repromise maybeUser = UserService.findUserForEmailAndHash(email, hash);
+    let%Promise hash = UserService.hashPassword(password)
+    let%Promise maybeUser = UserService.findUserForEmailAndHash(email, hash);
     let result = switch (maybeUser) {
     | Some(user) =>
         // It even works inside of a switch expression!
         // Here you can see we're using ".Wrap" to automatically wrap our result
         // in a promise.
-        let%Repromise.Wrap apiToken = TokenService.generateForUser(user.id);
+        let%Promise.Wrap apiToken = TokenService.generateForUser(user.id);
         Ok( user.firstName, apiToken )
     | None =>
         // We resolve a promise here to match the branch above.
-        Error("Sorry, no user found for that email & password combination")->Repromise.resolved
+        Error("Sorry, no user found for that email & password combination")->Promise.resolved
     };
 
-    // Since let_ is defined as "andThen" we've got to remember to return a promise
+    // Since let_ is defined as "flatMap" we've got to remember to return a promise
     // at the end of the function! Remember, all the lines after each let% just get
     // turned into a callback!
-    Repromise.resolved(result)
+    Promise.resolved(result)
 };
 ```
 
