@@ -42,46 +42,40 @@ If you'd like to see it in action, take a look at the video below. Otherwise, ke
 
 All you need is a module which defines a function called `let_` which takes something to map over, and a callback to do the mapping. For example:
 
-```reasonml
+```reason
 module Option = {
-    let let_ = Belt.Option.flatMap;
-}
+  let let_ = Belt.Option.flatMap;
+};
 ```
 
 Then, when you're working with something you want to map, add a `%<ModuleName>` onto your `let`, and the rest of the lines in the block will be turned into a callback and passed to the mapping function _at compile time_.
 
 For example:
 
-```reasonml
+```reason
 // Assume the `Option` module from above is defined already.
 
-type address = {
-    street: option(string)
-};
+type address = {street: option(string)};
 
-type personalInfo = {
-    address: option(address)
-};
+type personalInfo = {address: option(address)};
 
-type user = {
-    info: option(personalInfo)
-};
+type user = {info: option(personalInfo)};
 
 // Get the user's street name from a bunch of nested options. If anything is
 // None, return None.
 let getStreet = (maybeUser: option(user)): option(string) => {
-    let%Option user = maybeUser;
-    // Notice that info isn't an option anymore once we use let%Option!
-    let%Option info = user.info;
-    let%Option address = info.address;
-    let%Option street = address.street;
-    Some(street->Js.String.toUpperCase)
+  let%Option user = maybeUser;
+  // Notice that info isn't an option anymore once we use let%Option!
+  let%Option info = user.info;
+  let%Option address = info.address;
+  let%Option street = address.street;
+  Some(street->Js.String.toUpperCase);
 };
 ```
 
 That code is flat, readable, and understandable. Here's an alternative without the syntax sugar:
 
-```reasonml
+```reason
 let getStreet = (maybeUser: option(user)): option(string) => {
   maybeUser->Belt.Option.flatMap(user =>
     user.info
@@ -102,43 +96,44 @@ Much nicer to have the sugar, no? This PPX really shines, though, when we use it
 
 Here's a more complex example of an async control flow using the [Repromise](https://aantron.github.io/repromise/docs/QuickStart) library to work with Javascript promises:
 
-```reasonml
-
+```reason
 // Repromise doesn't ship with native support for this PPX, so we simply add our
 // own by re-defining the module, including all the stuff from the original
 // module, and adding our own function.
 module Repromise = {
-    include Repromise;
-    let let_ = (promise, cb) => Repromise.andThen(cb, promise);
+  include Repromise;
+  let let_ = (promise, cb) => Repromise.andThen(cb, promise);
 
-    // This is totally optional. It can be nice sometimes to return a
-    // non-promise value at the end of a function and have it automatically
-    // wrapped.
-    module Wrap = {
-        let let_ = (promise, cb) => Repromise.map(cb, promise);
-    }
-}
+  // This is totally optional. It can be nice sometimes to return a
+  // non-promise value at the end of a function and have it automatically
+  // wrapped.
+  module Wrap = {
+    let let_ = (promise, cb) => Repromise.map(cb, promise);
+  };
+};
 
 let logUserIn = (email: string, password: string) => {
-    // Assume this is a function that returns a promise of a hash.
-    let%Repromise hash = UserService.hashPassword(password)
-    let%Repromise maybeUser = UserService.findUserForEmailAndHash(email, hash);
-    let result = switch (maybeUser) {
+  // Assume this is a function that returns a promise of a hash.
+  let%Repromise hash = UserService.hashPassword(password);
+  let%Repromise maybeUser = UserService.findUserForEmailAndHash(email, hash);
+  let result =
+    switch (maybeUser) {
     | Some(user) =>
-        // It even works inside of a switch expression!
-        // Here you can see we're using ".Wrap" to automatically wrap our result
-        // in a promise.
-        let%Repromise.Wrap apiToken = TokenService.generateForUser(user.id);
-        Ok( user.firstName, apiToken )
+      // It even works inside of a switch expression!
+      // Here you can see we're using ".Wrap" to automatically wrap our result
+      // in a promise.
+      let%Repromise.Wrap apiToken = TokenService.generateForUser(user.id);
+      Ok(user.firstName, apiToken);
     | None =>
-        // We resolve a promise here to match the branch above.
-        Error("Sorry, no user found for that email & password combination")->Repromise.resolved
+      // We resolve a promise here to match the branch above.
+      Error("Sorry, no user found for that email & password combination")
+      ->Repromise.resolved
     };
 
-    // Since let_ is defined as "andThen" we've got to remember to return a promise
-    // at the end of the function! Remember, all the lines after each let% just get
-    // turned into a callback!
-    Repromise.resolved(result)
+  // Since let_ is defined as "andThen" we've got to remember to return a promise
+  // at the end of the function! Remember, all the lines after each let% just get
+  // turned into a callback!
+  Repromise.resolved(result);
 };
 ```
 
@@ -156,7 +151,7 @@ It's worth noting that this PPX simply produces a _function callback structure_.
 
 For example, this handrwitten code, which is pretty much what the PPX produces:
 
-```reasonml
+```reason
 let getStreet = (maybeUser: option(user)): option(string) => {
   maybeUser->Belt.Option.flatMap(user =>
     user.info
@@ -175,7 +170,7 @@ let getStreet = (maybeUser: option(user)): option(string) => {
 
 Is _functionally_ equivalent, but inferior in terms of performance, to the following hand-written code:
 
-```reasonml
+```reason
 let getStreetExplicit = (maybeUser: option(user)): option(string) => {
   switch (maybeUser) {
   | None => None
