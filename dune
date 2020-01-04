@@ -1,0 +1,2 @@
+(dirs
+ (:standard \ _esy node_modules example))

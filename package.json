@@ -2,32 +2,19 @@
   "name": "bs-let",
   "version": "0.1.11",
   "description": "A PPX for async/await (and general monadic binding) in ReasonML.",
-  "repository": {
-    "url": "https://github.com/reasonml-labs/bs-let"
-  },
+  "repository": "https://github.com/reasonml-labs/bs-let",
   "license": "MIT",
-  "esy": {
-    "build": "refmterr dune build -p let_anything_ppx"
-  },
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {
-    "build": "esy"
-  },
-  "dependencies": {},
-  "resolutions": {
-    "@esy-ocaml/esy-installer": "0.0.1",
-    "@opam/menhir": "20171013",
-    "@opam/re": "1.8.0"
+  "esy": {
+    "build": "refmterr dune build -p let_anything_ppx"
   },
   "devDependencies": {
-    "@opam/dune": "*",
-    "@opam/ocaml-migrate-parsetree": "^1.0.11",
-    "@esy-ocaml/reason": "*",
-    "refmterr": "*",
-    "@esy-ocaml/merlin": "*",
-    "esy": "^0.5.8",
-    "ocaml": "~4.6.1000"
+    "@opam/dune": "2.0.1",
+    "@opam/merlin": "3.3.3",
+    "@opam/ocaml-migrate-parsetree": "1.5.0",
+    "ocaml": "4.06.1000",
+    "refmterr": "3.3.0"
   }
 }
