@@ -1,9 +1,7 @@
-.DS_Store
-.merlin
-.bsb.lock
-npm-debug.log
-/lib/bs/
-node_modules
-/build/
-bs-ppx-css
+lib/
+node_modules/
 *.bs.js
+*.log
+.merlin
+package-lock.json
+yarn.lock

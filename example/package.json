@@ -1,24 +1,13 @@
 {
   "name": "ppx_example",
-  "version": "0.1.0",
+  "private": true,
   "scripts": {
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
     "clean": "bsb -clean-world"
   },
-  "keywords": [
-    "BuckleScript"
-  ],
-  "author": "",
-  "license": "MIT",
-  "esy": {},
-  "dependencies": {
-    "let-anything-ppx": "*"
-  },
   "devDependencies": {
-    "bs-platform": "7.0.0-dev.1"
-  },
-  "resolutions": {
-    "let-anything-ppx": "link:../"
+    "bs-let": "0.1.11",
+    "bs-platform": "7.0.1"
   }
 }
