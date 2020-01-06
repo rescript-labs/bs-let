@@ -97,39 +97,37 @@ Here's a more complex example of an async control flow using the [reason-promise
 // add our own by re-defining the module, including all the stuff from the
 // original module, and adding our own function.
 module Promise = {
-  include Promise;
-  let let_ = Promise.flatMap;
+    include Promise;
+    let let_ = Promise.flatMap;
 
-  // This is totally optional. It can be nice sometimes to return a
-  // non-promise value at the end of a function and have it automatically
-  // wrapped.
-  module Wrap = {
-    let let_ = Promise.map;
-  };
-};
+    // This is totally optional. It can be nice sometimes to return a
+    // non-promise value at the end of a function and have it automatically
+    // wrapped.
+    module Wrap = {
+        let let_ = Promise.map;
+    }
+}
 
 let logUserIn = (email: string, password: string) => {
-  // Assume this is a function that returns a promise of a hash.
-  let%Promise hash = UserService.hashPassword(password);
-  let%Promise maybeUser = UserService.findUserForEmailAndHash(email, hash);
-  let result =
-    switch (maybeUser) {
+    // Assume this is a function that returns a promise of a hash.
+    let%Promise hash = UserService.hashPassword(password)
+    let%Promise maybeUser = UserService.findUserForEmailAndHash(email, hash);
+    let result = switch (maybeUser) {
     | Some(user) =>
-      // It even works inside of a switch expression!
-      // Here you can see we're using ".Wrap" to automatically wrap our result
-      // in a promise.
-      let%Promise.Wrap apiToken = TokenService.generateForUser(user.id);
-      Ok(user.firstName, apiToken);
+        // It even works inside of a switch expression!
+        // Here you can see we're using ".Wrap" to automatically wrap our result
+        // in a promise.
+        let%Promise.Wrap apiToken = TokenService.generateForUser(user.id);
+        Ok( user.firstName, apiToken )
     | None =>
-      // We resolve a promise here to match the branch above.
-      Error("Sorry, no user found for that email & password combination")
-      ->Promise.resolved
+        // We resolve a promise here to match the branch above.
+        Error("Sorry, no user found for that email & password combination")->Promise.resolved
     };
 
-  // Since let_ is defined as "flatMap" we've got to remember to return a promise
-  // at the end of the function! Remember, all the lines after each let% just get
-  // turned into a callback!
-  Promise.resolved(result);
+    // Since let_ is defined as "flatMap" we've got to remember to return a promise
+    // at the end of the function! Remember, all the lines after each let% just get
+    // turned into a callback!
+    Promise.resolved(result)
 };
 ```
 

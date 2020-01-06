@@ -7,9 +7,8 @@ module R = {
   let let_ = Belt.Result.map;
 };
 
-{
+let _ = {
   let a = Ok({name: "sal", age: 21});
-
   let%R b = a;
   b.age + 29;
 };

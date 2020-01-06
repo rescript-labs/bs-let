@@ -1,21 +1,14 @@
 {
   "name": "ppx_example",
-  "reason": {
-    "react-jsx": 2
+  "refmt": 3,
+  "suffix": ".bs.js",
+  "package-specs": {
+    "module": "es6",
+    "in-source": true
   },
   "sources": {
     "dir": "src",
     "subdirs": true
   },
-  "package-specs": [
-    {
-      "module": "commonjs",
-      "in-source": true
-    }
-  ],
-  "ppx-flags": ["../ppx"],
-  "suffix": ".bs.js",
-  "namespace": true,
-  "bs-dependencies": [],
-  "refmt": 3
+  "ppx-flags": ["bs-let/ppx"]
 }
