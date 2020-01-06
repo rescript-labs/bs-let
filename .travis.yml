@@ -7,12 +7,12 @@ cache:
   directories:
     - "$HOME/.esy"
 node_js:
-  - "11"
+  - "12"
 install:
   - npm install -g esy
 script:
-  - npm run build
-  - mv _esy/default/build/default/.ppx/let_anything_ppx/ppx.exe ppx-$TRAVIS_OS_NAME.exe
+  - esy
+  - mv _esy/default/build/default/.ppx/**/ppx.exe ppx-$TRAVIS_OS_NAME.exe
 deploy:
   provider: releases
   edge: true
