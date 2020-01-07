@@ -11,7 +11,7 @@ This is package is an experimental community project (a.k.a "labs"). This means 
 Also, the expected lifetime of this PPX is relatively short. OCaml 4.08 has introduced native syntax for doing the same thing that this PPX does (`let+`). At the time of this writing, Bucklescript is still a ways out from supporting OCaml 4.08, or backporting support for `let+`. This PPX has two purposes:
 
 - Provide a temporary solution until Bucklescript and Reason both support `let+`.
-- Gague community interest in monadic syntax sugar in general and gather feedback on its usage.
+- Gauge community interest in monadic syntax sugar in general and gather feedback on its usage.
 
 ## Compatibility
 
