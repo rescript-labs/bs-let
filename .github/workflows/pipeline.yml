@@ -48,11 +48,12 @@ jobs:
         run: |
           esy install 
           esy dune build --root . --only-packages let_anything_ppx --ignore-promoted-rules --no-config --profile release-static
+          mv _esy/default/build/default/.ppx/**/ppx.exe ppx.exe
       - name: Upload artifacts ${{ matrix.os }}
         uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.os }}
-          path: _esy/default/build/default/.ppx/**/ppx.exe
+          path: ppx.exe
 
   test_and_build:
     name: ${{ matrix.os }} / node-${{ matrix.node-version }}
@@ -103,11 +104,12 @@ jobs:
         run: |
           esy install 
           esy b
+          mv _esy/default/build/default/.ppx/**/ppx.exe ppx.exe
       - name: Upload artifacts ${{ matrix.os }}
         uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.os }}
-          path: _esy/default/build/default/.ppx/**/ppx.exe
+          path: ppx.exe
 
   publish:
     needs: test_and_build

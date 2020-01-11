@@ -8,7 +8,14 @@
     "access": "public"
   },
   "esy": {
-    "build": "refmterr dune build -p let_anything_ppx"
+    "build": [
+      [
+        "dune",
+        "build",
+        "-p",
+        "let_anything_ppx"
+      ]
+    ]
   },
   "devDependencies": {
     "@opam/dune": "2.0.1",
