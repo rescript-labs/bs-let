@@ -49,7 +49,8 @@ jobs:
           esy install 
           esy dune build --root . --only-packages let_anything_ppx --ignore-promoted-rules --no-config --profile release-static
           mv _esy/default/store/b/**/default/.ppx/**/ppx.exe ppx.exe
-      - name: Upload artifacts ${{ matrix.os }}
+      - name: (only on release) Upload artifacts ${{ matrix.os }}
+        if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/')
         uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.os }}
@@ -105,7 +106,8 @@ jobs:
           esy install 
           esy b
           mv _esy/default/build/default/.ppx/**/ppx.exe ppx.exe
-      - name: Upload artifacts ${{ matrix.os }}
+      - name: (only on release) Upload artifacts ${{ matrix.os }}
+        if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/')
         uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.os }}
@@ -113,7 +115,7 @@ jobs:
 
   publish:
     needs: test_and_build
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/')
     name: (only on release) Publish
     runs-on: ubuntu-latest
     steps:
@@ -123,29 +125,29 @@ jobs:
           node-version: "12.x"
           registry-url: "https://registry.npmjs.org"
 
-      - name: (only on release) Download linux artifacts
-        if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') && success()
+      - name: Download linux artifacts
+        if: success()
         uses: actions/download-artifact@master
         with:
           name: ubuntu-latest
           path: binaries/linux
 
-      - name: (only on release) Download macOS artifacts
-        if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') && success()
+      - name: Download macOS artifacts
+        if: success()
         uses: actions/download-artifact@master
         with:
           name: macOS-latest
           path: binaries/darwin
 
-      - name: (only on release) Download windows artifacts
-        if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') && success()
+      - name: Download windows artifacts
+        if: success()
         uses: actions/download-artifact@master
         with:
           name: windows-latest
           path: binaries/windows
 
-      - name: (only on release) Move artifacts
-        if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') && success()
+      - name: Move artifacts
+        if: success()
         run: |
           mkdir -p bin/bsb6
           mv binaries/darwin/ppx.exe ppx-osx.exe
@@ -153,8 +155,8 @@ jobs:
           mv binaries/linux/ppx.exe ppx-linux.exe
           rm -rf binaries
 
-      - name: (only on release) Publish
-        if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') && success()
+      - name: Publish
+        if: success()
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
