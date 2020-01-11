@@ -48,7 +48,7 @@ jobs:
         run: |
           esy install 
           esy dune build --root . --only-packages let_anything_ppx --ignore-promoted-rules --no-config --profile release-static
-          mv _esy/default/**/let_anything_ppx/ppx.exe ppx.exe
+          mv _esy/default/store/b/**/default/.ppx/**/ppx.exe ppx.exe
       - name: Upload artifacts ${{ matrix.os }}
         uses: actions/upload-artifact@master
         with:
