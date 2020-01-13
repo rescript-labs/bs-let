@@ -2,5 +2,4 @@
   (name bin)
   (public_name let_anything_ppx)
   (libraries let_anything_lib)
-  (ocamlopt_flags ( -linkall ))
-)
+  (ocamlopt_flags ( -linkall )))

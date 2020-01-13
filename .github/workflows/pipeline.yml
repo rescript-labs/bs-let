@@ -47,13 +47,13 @@ jobs:
       - name: Install and build
         run: |
           esy install 
-          esy dune build --root . --only-packages let_anything_ppx --ignore-promoted-rules --no-config --profile release-static
+          esy dune build --root . --only-packages '#{self.name}' --ignore-promoted-rules --no-config --profile release-static
       - name: (only on release) Upload artifacts ${{ matrix.os }}
         # if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/')
         uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.os }}
-          path: _build/default/src/bin/bin.exe
+          path: _build/default/bin/bin.exe
 
   test_and_build:
     name: ${{ matrix.os }} / node-${{ matrix.node-version }}
@@ -109,7 +109,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.os }}
-          path: _build/default/src/bin/bin.exe
+          path: _build/default/bin/bin.exe
 
   publish:
     needs: test_and_build

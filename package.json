@@ -4,10 +4,10 @@
   "description": "A PPX for async/await (and general monadic binding) in ReasonML.",
   "repository": "https://github.com/reasonml-labs/bs-let",
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "postinstall": "node ./copyPlatformBinaryInPlace.js"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
