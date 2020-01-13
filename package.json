@@ -7,21 +7,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "esy": {
-    "build": [
-      [
-        "dune",
-        "build",
-        "-p",
-        "let_anything_ppx"
-      ]
-    ]
-  },
-  "devDependencies": {
-    "@opam/dune": "2.0.1",
-    "@opam/merlin": "3.3.3",
-    "@opam/ocaml-migrate-parsetree": "1.5.0",
-    "ocaml": "4.06.1000",
-    "refmterr": "3.3.0"
+  "scripts": {
+    "postinstall": "node ./copyPlatformBinaryInPlace.js"
   }
 }

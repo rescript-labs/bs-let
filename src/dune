@@ -1,5 +1,0 @@
-(library
- (name let_anything_ppx)
- (public_name let_anything_ppx)
- (libraries ocaml-migrate-parsetree str)
- (kind ppx_rewriter))

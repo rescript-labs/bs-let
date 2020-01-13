@@ -1,0 +1,3 @@
+(library
+ (name let_anything_lib)
+ (libraries ocaml-migrate-parsetree str))
