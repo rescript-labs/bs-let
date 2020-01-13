@@ -61,9 +61,10 @@ let mapper = (_config, _cookies) => {
           {
             pstr_desc:
               Pstr_eval(
-                {pexp_loc, pexp_desc: Pexp_try(value, handlers)},
+                {pexp_loc, pexp_desc: Pexp_try(value, handlers), _},
                 _attributes,
-              ),
+              ), 
+            _
           },
         ]),
       )) =>
@@ -96,9 +97,10 @@ let mapper = (_config, _cookies) => {
           {
             pstr_desc:
               Pstr_eval(
-                {pexp_desc: Pexp_let(Nonrecursive, bindings, continuation)},
+                {pexp_desc: Pexp_let(Nonrecursive, bindings, continuation), _},
                 _attributes,
               ),
+            _
           },
         ]),
       )) =>

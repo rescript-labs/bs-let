@@ -1,0 +1,15 @@
+{
+  "name": "let_anything_ppx",
+  "devDependencies": {
+    "@opam/dune": "*",
+    "@opam/merlin": "3.3.3",
+    "@opam/ocaml-migrate-parsetree": "1.5.0",
+    "ocaml": "4.06.1000",
+    "refmterr": "3.3.0",
+    "@esy-ocaml/reason": "~3.5.0"
+  },
+  "esy": {
+    "build": [["dune", "build", "-p", "#{self.name}"]],
+    "buildsInSource": "_build"
+  }
+}

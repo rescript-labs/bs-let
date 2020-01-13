@@ -4,17 +4,10 @@
   "description": "A PPX for async/await (and general monadic binding) in ReasonML.",
   "repository": "https://github.com/reasonml-labs/bs-let",
   "license": "MIT",
+  "scripts": {
+    "postinstall": "node ./copyPlatformBinaryInPlace.js"
+  },
   "publishConfig": {
     "access": "public"
-  },
-  "esy": {
-    "build": "refmterr dune build -p let_anything_ppx"
-  },
-  "devDependencies": {
-    "@opam/dune": "2.0.1",
-    "@opam/merlin": "3.3.3",
-    "@opam/ocaml-migrate-parsetree": "1.5.0",
-    "ocaml": "4.06.1000",
-    "refmterr": "3.3.0"
   }
 }
