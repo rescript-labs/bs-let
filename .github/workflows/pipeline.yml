@@ -53,7 +53,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.os }}
-          path: _build/default/src/bin/bin.ex
+          path: _build/default/src/bin/bin.exe
 
   test_and_build:
     name: ${{ matrix.os }} / node-${{ matrix.node-version }}
@@ -109,7 +109,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.os }}
-          path: _build/default/src/bin/bin.ex
+          path: _build/default/src/bin/bin.exe
 
   publish:
     needs: test_and_build
