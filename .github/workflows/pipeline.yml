@@ -147,7 +147,6 @@ jobs:
       - name: Move artifacts
         if: success()
         run: |
-          mkdir -p bin/bsb6
           mv binaries/darwin/bin.exe bs-let-darwin-x64.exe
           mv binaries/windows/bin.exe bs-let-win-x64.exe
           mv binaries/linux/bin.exe bs-let-linux-x64.exe

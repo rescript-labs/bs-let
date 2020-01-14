@@ -13,7 +13,7 @@ if (platform === "win32") {
   platform = "win";
 }
 
-copyBinary("bin/bs-let-" + platform + "-" + arch + ".exe", "ppx");
+copyBinary("bs-let-" + platform + "-" + arch + ".exe", "ppx");
 
 function copyBinary(filename, destFilename) {
   var supported = fs.existsSync(filename);
