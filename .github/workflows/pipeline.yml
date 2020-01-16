@@ -147,13 +147,17 @@ jobs:
       - name: Move artifacts
         if: success()
         run: |
-          mv binaries/darwin/bin.exe bs-let-darwin-x64.exe
-          mv binaries/windows/bin.exe bs-let-win-x64.exe
-          mv binaries/linux/bin.exe bs-let-linux-x64.exe
-          rm -rf binaries
+          mkdir -p release
+          mv binaries/darwin/bin.exe release/bs-let-darwin-x64.exe
+          mv binaries/windows/bin.exe release/bs-let-win-x64.exe
+          mv binaries/linux/bin.exe release/bs-let-linux-x64.exe
+          mv package.json release/package.json
+          mv copyPlatformBinaryInPlace.js release/copyPlatformBinaryInPlace.js
+          ls -l release          
 
       - name: Publish
+        working-directory: release
         if: success()
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
