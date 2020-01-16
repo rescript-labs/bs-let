@@ -1,22 +1,19 @@
 #!/usr/bin/env node
 
 var fs = require("fs");
+var path = require("path");
 
-var arch = process.arch;
-var platform = process.platform;
+var arch = process.arch === "ia32" ? "x86" : process.arch;
+var platform = process.platform === "win32" ? "win" : process.platform;
 
-if (arch === "ia32") {
-  arch = "x86";
-}
+var rootDir = __dirname;
+var sourceExePath = path.join(rootDir, `bs-let-${platform}-${arch}.exe`);
+var destExePath = path.join(rootDir, `ppx.exe`);
 
-if (platform === "win32") {
-  platform = "win";
-}
+copyBinary(sourceExePath, destExePath);
 
-copyBinary("bs-let-" + platform + "-" + arch + ".exe", "ppx");
-
-function copyBinary(filename, destFilename) {
-  var supported = fs.existsSync(filename);
+function copyBinary(sourceFilename, destFilename) {
+  var supported = fs.existsSync(sourceFilename);
 
   if (!supported) {
     console.error("bs-let does not support this platform :(");
@@ -33,14 +30,8 @@ function copyBinary(filename, destFilename) {
   }
 
   if (!fs.existsSync(destFilename)) {
-    copyFileSync(filename, destFilename);
+    copyFileSync(sourceFilename, destFilename);
     fs.chmodSync(destFilename, 0755);
-  }
-
-  var destFilenameExe = destFilename + ".exe";
-  if (!fs.existsSync(destFilenameExe)) {
-    copyFileSync(filename, destFilenameExe);
-    fs.chmodSync(destFilenameExe, 0755);
   }
 }
 
