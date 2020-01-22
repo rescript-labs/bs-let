@@ -16,7 +16,7 @@ jobs:
       image: cichocinski/docker-esy:alpine3.8
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -64,7 +64,7 @@ jobs:
         os: [windows-latest, macOS-latest]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -117,7 +117,7 @@ jobs:
     name: (only on release) Publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: "12.x"
