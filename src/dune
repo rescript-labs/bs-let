@@ -1,3 +1,4 @@
 (library
  (name let_anything_lib)
- (libraries ocaml-migrate-parsetree str))
+ (libraries ppxlib str)
+ (preprocess (pps ppxlib.metaquot)))
