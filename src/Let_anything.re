@@ -4,14 +4,23 @@
  RANDLE, JOSH ROBERTSON, OR OTHER MEMEBERS OF THE BLOOM BUILT TEAM.
  */
 
-open Migrate_parsetree;
-open Ast_406;
+open Ppxlib;
 
 /*
  * https://ocsigen.org/lwt/dev/api/Ppx_lwt
  * https://github.com/zepalmer/ocaml-monadic
  */
-let fail = (loc, txt) => raise(Location.Error(Location.error(~loc, txt)));
+let fail = (loc, txt) => Location.raise_errorf(~loc, txt);
+
+let mkloc = (txt, loc) => {
+  {Location.txt, loc};
+};
+
+let lid_last = fun
+  | Lident(s) => s
+  | Ldot(_, s) => s
+  | Lapply(_, _) => failwith("lid_last on functor application")
+
 
 let rec process_bindings = (bindings, ident) =>
   Parsetree.(
@@ -29,7 +38,7 @@ let rec process_bindings = (bindings, ident) =>
           ~loc=binding.pvb_loc,
           Ast_helper.Exp.ident(
             ~loc=binding.pvb_loc,
-            Location.mkloc(Longident.Ldot(ident, "and_"), binding.pvb_loc),
+            mkloc(Longident.Ldot(ident, "and_"), binding.pvb_loc),
           ),
           [(Nolabel, binding.pvb_expr), (Nolabel, expr)],
         ),
@@ -50,10 +59,12 @@ let parseLongident = txt => {
   loop(None, parts);
 };
 
-let mapper = (_config, _cookies) => {
-  ...Ast_mapper.default_mapper,
-  /* TODO throw error on structure items */
-  expr: (mapper, expr) =>
+class mapper = {
+  as _;
+  inherit class Ast_traverse.map as super;
+
+  pub! expression = expr => {
+    /* TODO throw error on structure items */
     switch (expr.pexp_desc) {
     | Pexp_extension((
         {txt, loc},
@@ -63,15 +74,15 @@ let mapper = (_config, _cookies) => {
               Pstr_eval(
                 {pexp_loc, pexp_desc: Pexp_try(value, handlers), _},
                 _attributes,
-              ), 
+              ),
             _
           },
         ]),
       )) =>
       let ident = parseLongident(txt);
-      let last = Longident.last(ident);
+      let last = lid_last(ident);
       if (last != String.capitalize_ascii(last)) {
-        Ast_mapper.default_mapper.expr(mapper, expr);
+        super#expression(expr);
       } else {
         let handlerLocStart = List.hd(handlers).pc_lhs.ppat_loc;
         let handlerLocEnd =
@@ -80,13 +91,13 @@ let mapper = (_config, _cookies) => {
         let try_ =
           Ast_helper.Exp.ident(
             ~loc=pexp_loc,
-            Location.mkloc(Longident.Ldot(ident, "try_"), loc),
+            mkloc(Longident.Ldot(ident, "try_"), loc),
           );
         Ast_helper.Exp.apply(
           ~loc,
           try_,
           [
-            (Nolabel, mapper.expr(mapper, value)),
+            (Nolabel, super#expression(value)),
             (Nolabel, Ast_helper.Exp.function_(~loc=handlerLoc, handlers)),
           ],
         );
@@ -105,21 +116,21 @@ let mapper = (_config, _cookies) => {
         ]),
       )) =>
       let ident = parseLongident(txt);
-      let last = Longident.last(ident);
+      let last = lid_last(ident);
       if (last != String.capitalize_ascii(last)) {
-        Ast_mapper.default_mapper.expr(mapper, expr);
+        super#expression(expr);
       } else {
         let (pat, expr) = process_bindings(bindings, ident);
         let let_ =
           Ast_helper.Exp.ident(
             ~loc,
-            Location.mkloc(Longident.Ldot(ident, "let_"), loc),
+            mkloc(Longident.Ldot(ident, "let_"), loc),
           );
         Ast_helper.Exp.apply(
           ~loc,
           let_,
           [
-            (Nolabel, mapper.expr(mapper, expr)),
+            (Nolabel, super#expression(expr)),
             (
               Nolabel,
               Ast_helper.Exp.fun_(
@@ -127,20 +138,21 @@ let mapper = (_config, _cookies) => {
                 Nolabel,
                 None,
                 pat,
-                mapper.expr(mapper, continuation),
+                super#expression(continuation),
               ),
             ),
           ],
         );
       };
-    | _ => Ast_mapper.default_mapper.expr(mapper, expr)
-    },
+    | _ => super#expression(expr)
+    };
+  };
 };
 
+let structure_mapper = s => (new mapper)#structure(s);
+
 let () =
-  Migrate_parsetree.Driver.register(
-    ~name="let-anything",
-    ~args=[],
-    Migrate_parsetree.Versions.ocaml_406,
-    mapper,
+  Ppxlib.Driver.register_transformation(
+    ~preprocess_impl=structure_mapper,
+    "let-anything",
   );
