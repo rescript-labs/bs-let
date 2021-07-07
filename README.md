@@ -6,7 +6,7 @@ This is a PPX (language extension) designed to make _monadic operations_ (think 
 
 ## Warning: Experimental Project
 
-This is package is an experimental community project (a.k.a "labs"). This means that community members use it and contribute to it, but it is not officially supported or recommended by the ReasonML community. Using this project in a production environment means being willing to contribute yourself if needs be.
+This package is an experimental community project (a.k.a "labs"). This means that community members use it and contribute to it, but it is not officially supported or recommended by the ReasonML community. Using this project in a production environment means being willing to contribute yourself if needs be.
 
 Also, the expected lifetime of this PPX is relatively short. OCaml 4.08 has introduced native syntax for doing the same thing that this PPX does (`let+`). At the time of this writing, Bucklescript is still a ways out from supporting OCaml 4.08, or backporting support for `let+`. This PPX has two purposes:
 
