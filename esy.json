@@ -1,9 +1,9 @@
 {
   "name": "let_anything_ppx",
   "dependencies": {
-    "ocaml": "4.12.x",
+    "ocaml": "4.14.x",
     "@opam/dune": "*",
-    "@opam/reason": "~3.7.0",
+    "@opam/reason": "*",
     "@opam/ppxlib": ">= 0.22.0"
   },
   "devDependencies": {
