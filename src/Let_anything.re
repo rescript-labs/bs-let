@@ -16,12 +16,6 @@ let mkloc = (txt, loc) => {
   {Location.txt, loc};
 };
 
-let lid_last = fun
-  | Lident(s) => s
-  | Ldot(_, s) => s
-  | Lapply(_, _) => failwith("lid_last on functor application")
-
-
 let rec process_bindings = (bindings, ident) =>
   Parsetree.(
     switch (bindings) {
@@ -60,7 +54,7 @@ let parseLongident = txt => {
 };
 
 class mapper = {
-  as _;
+  as self;
   inherit class Ast_traverse.map as super;
 
   pub! expression = expr => {
@@ -80,7 +74,7 @@ class mapper = {
         ]),
       )) =>
       let ident = parseLongident(txt);
-      let last = lid_last(ident);
+      let last = Longident.last_exn(ident);
       if (last != String.capitalize_ascii(last)) {
         super#expression(expr);
       } else {
@@ -97,7 +91,7 @@ class mapper = {
           ~loc,
           try_,
           [
-            (Nolabel, super#expression(value)),
+            (Nolabel, self#expression(value)),
             (Nolabel, Ast_helper.Exp.function_(~loc=handlerLoc, handlers)),
           ],
         );
@@ -116,29 +110,29 @@ class mapper = {
         ]),
       )) =>
       let ident = parseLongident(txt);
-      let last = lid_last(ident);
+      let last = Longident.last_exn(ident);
       if (last != String.capitalize_ascii(last)) {
         super#expression(expr);
       } else {
         let (pat, expr) = process_bindings(bindings, ident);
         let let_ =
-          Ast_helper.Exp.ident(
+          Ast_builder.Default.pexp_ident(
             ~loc,
             mkloc(Longident.Ldot(ident, "let_"), loc),
           );
-        Ast_helper.Exp.apply(
+        Ast_builder.Default.pexp_apply(
           ~loc,
           let_,
           [
-            (Nolabel, super#expression(expr)),
+            (Nolabel, self#expression(expr)),
             (
               Nolabel,
-              Ast_helper.Exp.fun_(
+              Ast_builder.Default.pexp_fun(
                 ~loc,
                 Nolabel,
                 None,
                 pat,
-                super#expression(continuation),
+                self#expression(continuation),
               ),
             ),
           ],
