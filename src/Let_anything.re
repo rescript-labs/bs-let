@@ -54,7 +54,7 @@ let parseLongident = txt => {
 };
 
 class mapper = {
-  as _;
+  as self;
   inherit class Ast_traverse.map as super;
 
   pub! expression = expr => {
@@ -91,7 +91,7 @@ class mapper = {
           ~loc,
           try_,
           [
-            (Nolabel, super#expression(value)),
+            (Nolabel, self#expression(value)),
             (Nolabel, Ast_helper.Exp.function_(~loc=handlerLoc, handlers)),
           ],
         );
@@ -124,7 +124,7 @@ class mapper = {
           ~loc,
           let_,
           [
-            (Nolabel, super#expression(expr)),
+            (Nolabel, self#expression(expr)),
             (
               Nolabel,
               Ast_helper.Exp.fun_(
@@ -132,7 +132,7 @@ class mapper = {
                 Nolabel,
                 None,
                 pat,
-                super#expression(continuation),
+                self#expression(continuation),
               ),
             ),
           ],
