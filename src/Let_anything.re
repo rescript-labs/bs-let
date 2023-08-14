@@ -116,18 +116,18 @@ class mapper = {
       } else {
         let (pat, expr) = process_bindings(bindings, ident);
         let let_ =
-          Ast_helper.Exp.ident(
+          Ast_builder.Default.pexp_ident(
             ~loc,
             mkloc(Longident.Ldot(ident, "let_"), loc),
           );
-        Ast_helper.Exp.apply(
+        Ast_builder.Default.pexp_apply(
           ~loc,
           let_,
           [
             (Nolabel, self#expression(expr)),
             (
               Nolabel,
-              Ast_helper.Exp.fun_(
+              Ast_builder.Default.pexp_fun(
                 ~loc,
                 Nolabel,
                 None,
