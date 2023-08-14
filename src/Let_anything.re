@@ -16,12 +16,6 @@ let mkloc = (txt, loc) => {
   {Location.txt, loc};
 };
 
-let lid_last = fun
-  | Lident(s) => s
-  | Ldot(_, s) => s
-  | Lapply(_, _) => failwith("lid_last on functor application")
-
-
 let rec process_bindings = (bindings, ident) =>
   Parsetree.(
     switch (bindings) {
@@ -80,7 +74,7 @@ class mapper = {
         ]),
       )) =>
       let ident = parseLongident(txt);
-      let last = lid_last(ident);
+      let last = Longident.last_exn(ident);
       if (last != String.capitalize_ascii(last)) {
         super#expression(expr);
       } else {
@@ -116,7 +110,7 @@ class mapper = {
         ]),
       )) =>
       let ident = parseLongident(txt);
-      let last = lid_last(ident);
+      let last = Longident.last_exn(ident);
       if (last != String.capitalize_ascii(last)) {
         super#expression(expr);
       } else {
